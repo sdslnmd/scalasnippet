@@ -1,0 +1,46 @@
+package base
+
+import scala.Some
+
+object OptionTest {
+
+
+  def main(args: Array[String]): Unit = {
+
+    def lift[A, B](f: A => B): Option[A] => Option[B] = _ map f
+
+    def lift2[A, B](f: A => B): Option[A] => Option[B] = {
+      x=>{
+        if(x.isEmpty){
+          None
+        }else{
+          Some(f(x.get))
+        }
+      }
+    }
+
+
+    def t1(x: Int): String = {
+      String.valueOf(x)
+    }
+
+    println(lift(t1)(Option.empty))
+
+    println(saySomething("1")("2"))
+
+  }
+
+  def saySomething1(prefix: String) = (s: String) => {
+    prefix + " " + s
+  }
+
+
+  def saySomething(prefix: String): String => String = (s: String) => {
+    prefix + " " + s
+  }
+
+  def f(x: Int): Int => Int = { n: Int => x + n }
+
+  def f2(x: Int) = (y: Int) => x + y
+
+}
