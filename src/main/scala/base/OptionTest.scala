@@ -10,15 +10,20 @@ object OptionTest {
     def lift[A, B](f: A => B): Option[A] => Option[B] = _ map f
 
     def lift2[A, B](f: A => B): Option[A] => Option[B] = {
-      x=>{
-        if(x.isEmpty){
-          None
-        }else{
-          Some(f(x.get))
-        }
+      x => if (x.isEmpty) None else Some(f(x.get))
+    }
+
+    def lift3[A, B](f: A => B): Stream[A] => Stream[B] = {
+      val empty = Stream.empty[B]
+      x => {
+        x.foreach(zz => {
+//          empty.append(f(zz))
+        })
+        empty
       }
     }
 
+    def fun1[A](x: A): A = x
 
     def t1(x: Int): String = {
       String.valueOf(x)
