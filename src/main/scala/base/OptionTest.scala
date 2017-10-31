@@ -1,9 +1,8 @@
 package base
 
-import scala.Some
-
 object OptionTest {
 
+  //https://softwareengineering.stackexchange.com/questions/255696/what-is-a-lifted-representation
 
   def main(args: Array[String]): Unit = {
 
