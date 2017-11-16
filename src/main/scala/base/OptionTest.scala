@@ -22,6 +22,8 @@ object OptionTest {
       }
     }
 
+
+
     def fun1[A](x: A): A = x
 
     def t1(x: Int): String = {
