@@ -22,7 +22,7 @@ final case class Tweet(auther: Auther, timestamp: Long, body: String) {
 //http://www.lihaoyi.com/post/ImplicitDesignPatternsinScala.html
 
 object AkkaStreamGraphTest {
-//
+
 //  val writeAuthors: Sink[Auther, NotUsed] = ???
 //  val writeHashtags: Sink[Hashtag, NotUsed] = ???
 //  val tweets: Source[Tweet, NotUsed] = ???

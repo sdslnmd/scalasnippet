@@ -17,6 +17,9 @@ object CollectionTest {
       case zzz:Int=> println("int")
     }
 
+    val tuples = List(1, 2, 3).flatMap(x => Some('x').map(y => (x, y)))
+    println(tuples)
+
   }
 
 
