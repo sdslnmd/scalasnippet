@@ -1,8 +1,6 @@
 package base
 
-
 case class CurryContainer(x: Int)
-
 
 object CurryTest {
 
@@ -11,14 +9,18 @@ object CurryTest {
     f(container)
   }
 
+  var getInt: Int => String = x => "String " + x.toString
+
   def main(args: Array[String]): Unit = {
 
-    val intToContainer = create(){ container =>
+    val intToContainer = create() { container =>
       if (container.x > 3) true else false
     }
 
-    println(intToContainer)
-  }
+    println(s"intToContainer $intToContainer")
 
+    println("call get int " + getInt(123))
+
+  }
 
 }
