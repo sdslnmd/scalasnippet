@@ -3,8 +3,9 @@ package akkastream
 import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, ThrottleMode}
 import akka.stream.scaladsl.{Keep, Sink, Source}
+
 import scala.concurrent.duration.DurationInt
-import scala.concurrent.ExecutionContextExecutor
+import scala.concurrent.{ExecutionContextExecutor, Future}
 
 object AkkaStreamTest {}
 
@@ -27,6 +28,26 @@ object AkkaStreamMainTest extends App {
     .toMat(Sink.foreach(println))(Keep.right)
     .run()
     .onComplete(_ => system.terminate())
+
+  Source(1 to 10000).mapAsync(8) { v =>
+    Future {
+      val start = System.currentTimeMillis()
+      while ((System.currentTimeMillis() - start) < 10) {
+        v
+      }
+    }
+  }
+
+
+  Source(1 to 10000).mapAsync(8) { v =>
+    Future.successful {
+      val start = System.currentTimeMillis()
+      while ((System.currentTimeMillis() - start) < 10) {
+        v
+      }
+    }
+  }.runWith(Sink.foreach(println)).onComplete(_=>"run over")
+
 
 
 

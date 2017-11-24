@@ -1,10 +1,11 @@
 package akkastream
 
+import akka.actor.ActorSystem
 import akka.{Done, NotUsed}
-import akka.stream.{ClosedShape, KillSwitches, UniqueKillSwitch}
+import akka.stream.{ActorMaterializer, ClosedShape, KillSwitches, UniqueKillSwitch}
 import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, Keep, RunnableGraph, Sink, Source}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContextExecutor, Future}
 
 final case class Auther(handler: String)
 
@@ -25,9 +26,13 @@ final case class Tweet(auther: Auther, timestamp: Long, body: String) {
 
 object AkkaStreamGraphTest {
 
-  val writeAuthors: Sink[Auther, NotUsed] = ???
-  val writeHashtags: Sink[Hashtag, NotUsed] = ???
-  val tweets: Source[Tweet, NotUsed] = ???
+  implicit val system: ActorSystem = ActorSystem("reactive")
+  implicit val materializer: ActorMaterializer = ActorMaterializer()
+  implicit val ec: ExecutionContextExecutor = system.dispatcher
+
+  val writeAuthors: Sink[Auther, NotUsed] = Sink.cancelled
+  val writeHashtags: Sink[Hashtag, NotUsed] = Sink.cancelled
+  val tweets: Source[Tweet, NotUsed] = Source.single(Tweet(Auther("auther"), 1000l, "123123"))
 
   private val graph: RunnableGraph[NotUsed] =
     RunnableGraph.fromGraph(GraphDSL.create() { implicit b =>
@@ -42,11 +47,15 @@ object AkkaStreamGraphTest {
     })
 
   //返回值不同
-  private val used: NotUsed = graph.run()
+//  private val used: NotUsed = graph.run()
 
 }
 
 object AkkaStreamKillSwitch {
+
+  implicit val system: ActorSystem = ActorSystem("reactive")
+  implicit val materializer: ActorMaterializer = ActorMaterializer()
+  implicit val ec: ExecutionContextExecutor = system.dispatcher
 
   // 关注 toMat 方法
   private val helloStream: RunnableGraph[(UniqueKillSwitch, Future[Done])] = Source
