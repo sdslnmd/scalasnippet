@@ -33,24 +33,25 @@ object AkkaStreamMainTest extends App {
     Future {
       val start = System.currentTimeMillis()
       while ((System.currentTimeMillis() - start) < 10) {
-        v
+        println(s"Future ${v}")
       }
     }
   }
 
 
-  Source(1 to 10000).mapAsync(8) { v =>
-    Future.successful {
-      val start = System.currentTimeMillis()
-      while ((System.currentTimeMillis() - start) < 10) {
-        v
+  private val futureSuccessStart: Long = System.currentTimeMillis()
+
+  // Future.successful  产生阻塞等待 不能充分利用并行能力
+  Source(1 to 10)
+    .mapAsync(8) { v =>
+      Future.successful {
+        val start = System.currentTimeMillis()
+        while ((System.currentTimeMillis() - start) < 10) {
+          println(s"Future.successful $v")
+        }
       }
     }
-  }.runWith(Sink.foreach(println)).onComplete(_=>"run over")
-
-
-
-
-
+    .runWith(Sink.foreach(s => s))
+    .onComplete(_ => "run over"+(System.currentTimeMillis-futureSuccessStart))
 
 }
