@@ -38,6 +38,7 @@ object AkkaStreamMainTest extends App {
     }
   }
 
+  //http://blog.colinbreck.com/integrating-akka-streams-and-akka-actors-part-iv/
 
   private val futureSuccessStart: Long = System.currentTimeMillis()
 
