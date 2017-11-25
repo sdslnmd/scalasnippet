@@ -53,6 +53,7 @@ object AkkaStreamMainTest extends App {
       }
     }
     .runWith(Sink.foreach(s => s))
-    .onComplete(_ => "run over"+(System.currentTimeMillis-futureSuccessStart))
+    .onComplete(_ =>
+      "run over" + (System.currentTimeMillis - futureSuccessStart))
 
 }
