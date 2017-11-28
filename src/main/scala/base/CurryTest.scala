@@ -9,7 +9,14 @@ object CurryTest {
     f(container)
   }
 
-  var getInt: Int => String = x => "String " + x.toString
+  var getInt: Int => String = x => { "String " + x.toString }
+
+  var callAny: Any => String = {
+
+    case _:String => "string"
+    case _      => "unknown"
+
+  }
 
   def main(args: Array[String]): Unit = {
 
@@ -21,6 +28,7 @@ object CurryTest {
 
     println("call get int " + getInt(123))
 
+    println("callAny " + callAny(123))
   }
 
 }
