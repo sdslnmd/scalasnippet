@@ -16,7 +16,6 @@ object SimpleClusterApp {
         )
 
       //create an Akka system
-
       val system = ActorSystem("ClusterSystem",config)
       system.actorOf(Props[SimpleClusterListener],name = "clusterListener")
 
