@@ -23,6 +23,8 @@ object MainSample {
       case Terminated(_) =>
         log.info("{} 中断了.", ref.path)
         context.system.terminate()
+
+      case _ => log.info("run ing")
     }
   }
 
