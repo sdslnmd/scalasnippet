@@ -19,6 +19,14 @@ object CollectionTest {
     val tuples = List(1, 2, 3).flatMap(x => Some('x').map(y => (x, y)))
     println(tuples)
 
+    val tuples2 = for{
+      x <- List(1,2,3)
+      y <- "x"
+    }yield(x,y)
+
+
+    println("tuples2 123123123")
+
     val ints = Vector(1, 2, 3)
     ints ++ Vector(4, 9)
 
