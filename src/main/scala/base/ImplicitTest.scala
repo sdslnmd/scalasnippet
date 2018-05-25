@@ -1,5 +1,6 @@
 package base
 
+// http://www.geekabyte.io/2016/06/understanding-implicits-in-scala.html
 object ImplicitTest extends App {
 
   trait PrintOps {
